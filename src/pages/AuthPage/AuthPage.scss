@@ -1,0 +1,24 @@
+@import "../../utils/styleConsts";
+
+.auth-btn {
+  width: 100%;
+  background-color: $color-chambray !important;
+  border-color: $color-chambray !important;
+  border-radius: 35px !important;
+  color: $color-white !important;
+  font-weight: bold !important;
+}
+
+.auth-checkbox {
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: $color-chambray !important;
+    border-color: $color-chambray !important;
+  }
+
+  .ant-checkbox-wrapper:hover .ant-checkbox-inner,
+  .ant-checkbox:hover .ant-checkbox-inner,
+  .ant-checkbox-input:focus + .ant-checkbox-inner,
+  .ant-checkbox-checked::after {
+    border-color: $color-chambray !important;
+  }
+}

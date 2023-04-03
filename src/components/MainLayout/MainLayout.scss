@@ -1,0 +1,25 @@
+@import "../../utils/styleConsts";
+
+.main-layout {
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__logo {
+    height: 100%;
+  }
+
+  &__user-image {
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &__logout-btn {
+    color: $color-white !important;
+    font-weight: bold !important;
+  }
+}

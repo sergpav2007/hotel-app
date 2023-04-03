@@ -8,7 +8,7 @@ import store from './store';
 import middleware from './store/middleware';
 import rootSaga from './store/sagas';
 
-import 'antd/dist/antd.js';
+import 'antd/dist/reset.css';
 
 middleware.run(rootSaga);
 

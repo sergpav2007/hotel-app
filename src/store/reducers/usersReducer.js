@@ -15,6 +15,16 @@ export default function usersReducer(state = initialState, { type, payload }) {
       ...state,
       accounts: { ...state.accounts, ...payload },
     };
+  case ACTION_TYPES.LOGIN_SUCCESS:
+    return {
+      ...state,
+      authUser: { ...state.authUser, isAuthorized: true, ...payload },
+    };
+  case ACTION_TYPES.LOGOUT_SUCCESS:
+    return {
+      ...state,
+      authUser: { isAuthorized: false, username: '' },
+    };
   default:
     return state;
   }
