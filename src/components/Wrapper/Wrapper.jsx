@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
-import { Route } from 'react-router';
-import { Switch } from 'antd';
+import { Route } from 'react-router-dom';
+import {Switch} from 'antd';
 import { message, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthPage from '../../pages/AuthPage';
@@ -25,8 +25,8 @@ const Wrapper = () => {
   }, [accounts]);
 
   useEffect(() => {
-    return dispatch(getAccounts());
-  }, []);
+    dispatch(getAccounts());
+  }, [dispatch]);
 
   useEffect(() => {
     const authData = localStorage.getItem('authData');
@@ -34,7 +34,7 @@ const Wrapper = () => {
     if (isEmptyAccounts || !authData) return;
 
     dispatch(logIn(JSON.parse(authData)));
-  }, [accounts]);
+  }, [accounts, dispatch, isEmptyAccounts]);
 
   useEffect(() => {
     if (!notification) return;
@@ -44,7 +44,7 @@ const Wrapper = () => {
     if (isShow) {
       message[status](content).then(dispatch(clearNotifications()));
     }
-  }, [notification]);
+  }, [dispatch, notification]);
 
   return isEmptyAccounts ? (
     <div className="loading-wrap">

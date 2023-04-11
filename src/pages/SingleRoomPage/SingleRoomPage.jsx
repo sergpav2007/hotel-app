@@ -6,9 +6,9 @@ import { CheckOutlined, HomeOutlined } from '@ant-design/icons';
 import MainLayout from '../../components/MainLayout';
 import { getSingleRoom } from '../../store/selectors/roomsSelectors';
 import { ROOM_TYPE_LABEL } from '../../constants/rooms';
+import CheckOutButton from '../../components/Buttons/CheckOutButton';
+import CheckInButton from '../../components/Buttons/CheckInButton';
 import './SingleRoomPage.scss';
-
-const propTypes = {};
 
 const SingleRoomPage = () => {
   const { search } = useLocation();
@@ -37,8 +37,8 @@ const SingleRoomPage = () => {
               <Typography.Title level={2} underline>{`Room ${room.number}`}</Typography.Title>
             </Col>
             <Col>
-              <Button type="primary" className="room-button" disabled={room.isCheckedIn}>Check In</Button>
-              <Button type="primary" className="room-button" disabled={!room.isCheckedIn}>Check Out</Button>
+              <CheckInButton room={room} />
+              <CheckOutButton room={room} />
             </Col>
           </Row>
           <Row>
@@ -84,7 +84,5 @@ const SingleRoomPage = () => {
     </MainLayout>
   );
 };
-
-SingleRoomPage.propTypes = propTypes;
 
 export default SingleRoomPage;

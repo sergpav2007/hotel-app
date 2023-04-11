@@ -1,23 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Table, Row, Col, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import MainLayout from '../components/MainLayout';
 import { ROOMS_TYPES, ROOM_TYPE_LABEL, ROOM_OCCUPANCY_LIST } from '../constants/rooms';
 import { getRoomsState } from '../store/selectors/roomsSelectors';
-import { getRooms } from '../store/actions/roomsActions';
+import { checkOutRoom, getRooms } from '../store/actions/roomsActions';
+
+
 
 const RoomsTablePage = () => {
-  const rooms = useSelector(getRoomsState) || [];
+  const roomsState = useSelector(getRoomsState);
+  const rooms = useMemo(() => roomsState, [roomsState]);
   const dispatch = useDispatch();
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isFreeRooms, setIsFreeRooms] = useState(false);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
-  // const filteredRooms = useMemo(() => (isChecked ? rooms.filter((room) => room.isCheckedIn !== isChecked) : rooms), [rooms, isChecked]);
-  // const guestsOptions = useMemo(() => (!isChecked ? rooms.filter((room) => room.guest).map((room) => ({ text: room.guest, value: room.guest })) : []), [rooms, isChecked]);
-  const filteredRooms = (isChecked ? rooms.filter((room) => room.isCheckedIn !== isChecked) : rooms);
-  const guestsOptions = (!isChecked ? rooms.filter((room) => room.guest).map((room) => ({ text: room.guest, value: room.guest })) : []);
+  const filteredRooms = useMemo(() => (isFreeRooms ? rooms.filter((room) => room.isCheckedIn !== isFreeRooms) : rooms), [rooms, isFreeRooms]);
+  // const filteredRooms = isFreeRooms ? rooms.filter((room) => room.isCheckedIn !== isFreeRooms) : rooms;
+  const guestsOptions = useMemo(() => (!isFreeRooms
+    ? rooms
+      .filter((room) => room.guest)
+      .map((room) => ({ text: room.guest, value: room.guest }))
+    : []
+  ), [isFreeRooms, rooms]);
+  // const guestsOptions = !isFreeRooms ? rooms.filter((room) => room.guest).map((room) => ({ text: room.guest, value: room.guest })) : [];
+
   const columns = [
     {
       title: 'Number',
@@ -72,7 +82,7 @@ const RoomsTablePage = () => {
   ];
 
   const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
+    setIsFreeRooms(event.target.checked);
   };
   const handleTableChange = (pagination, filters, sorter) => {
     setFilteredInfo(filters);
@@ -81,14 +91,24 @@ const RoomsTablePage = () => {
   const clearAll = () => {
     setFilteredInfo({});
     setSortedInfo({});
-    setIsChecked(false);
+    setIsFreeRooms(false);
   };
 
   useEffect(() => {
     if (!rooms.length) {
       dispatch(getRooms());
     }
-  }, [rooms]);
+  }, [dispatch, rooms.length]);
+
+  useEffect(() => {
+    if (rooms.length) {
+      rooms.forEach((room) => {
+        if (room.checkOutDate && moment(room.checkOutDate) < moment().endOf('day')) {
+          dispatch(checkOutRoom(room.id));
+        }
+      });
+    }
+  }, [dispatch, rooms]);
 
   return (
     <MainLayout>
@@ -97,7 +117,7 @@ const RoomsTablePage = () => {
           <Button type="primary" onClick={clearAll}>Clear all filters</Button>
         </Col>
         <Col span={6}>
-          <Checkbox onChange={handleCheckboxChange} checked={isChecked}>
+          <Checkbox onChange={handleCheckboxChange} checked={isFreeRooms}>
             Free rooms only
           </Checkbox>
         </Col>

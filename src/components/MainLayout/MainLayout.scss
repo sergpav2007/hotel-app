@@ -2,6 +2,10 @@
 
 .main-layout {
   height: 100vh;
+
+  &__content {
+    padding: 20px 50px;
+  }
 }
 
 .header {
@@ -20,6 +24,5 @@
 
   &__logout-btn {
     color: $color-white !important;
-    font-weight: bold !important;
   }
 }
