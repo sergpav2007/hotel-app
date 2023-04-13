@@ -10,7 +10,7 @@ import rootSaga from './store/sagas';
 import 'antd/dist/reset.css';
 import './index.css';
 
-// middleware.run(rootSaga);
+middleware.run(rootSaga);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
