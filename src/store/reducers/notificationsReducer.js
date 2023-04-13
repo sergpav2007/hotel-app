@@ -7,6 +7,7 @@ export default function notificationsReducer(state = initialState, { type, paylo
   case ACTION_TYPES.SHOW_NOTIFICATION:
     return payload;
   case ACTION_TYPES.CLEAR_NOTIFICATIONS:
+  case ACTION_TYPES.LOGOUT_SUCCESS:
     return initialState;
   default:
     return state;

@@ -1,5 +1,5 @@
 import createSagaMiddleware from 'redux-saga';
 
-const sagaMiddleware = createSagaMiddleware();
+const middleware = createSagaMiddleware();
 
-export default sagaMiddleware;
+export default middleware;

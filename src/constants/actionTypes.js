@@ -1,8 +1,15 @@
 export default {
-    GET_ACCOUNTS: 'get_accounts',
-    GET_ACCOUNTS_SUCCESS: 'get_accounts_success',
-    GET_ROOMS: 'get_rooms',
-    GET_ROOMS_SUCCESS: 'get_rooms_success',
-    SHOW_NOTIFICATION: 'show_notification',
-    CLEAR_NOTIFICATIONS: 'clear_notifications',
-  };
+  GET_ACCOUNTS: 'get_accounts',
+  GET_ACCOUNTS_SUCCESS: 'get_accounts_success',
+  GET_ROOMS: 'get_rooms',
+  GET_ROOMS_SUCCESS: 'get_rooms_success',
+  SHOW_NOTIFICATION: 'show_notification',
+  CLEAR_NOTIFICATIONS: 'clear_notifications',
+  LOGIN: 'login',
+  LOGIN_SUCCESS: 'login_success',
+  LOGOUT: 'logout',
+  LOGOUT_SUCCESS: 'logout_success',
+  CHECK_IN: 'check_in',
+  CHECK_OUT: 'check_out',
+  UPDATE_ROOM_SUCCESS: 'update_room_success',
+};
